@@ -12,6 +12,26 @@
         tools:layout_editor_absoluteX="143dp"
         tools:layout_editor_absoluteY="179dp">
 
+        <EditText
+            android:id="@+id/editTextTextPersonName4"
+            android:layout_width="148dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            tools:layout_editor_absoluteX="98dp"
+            tools:layout_editor_absoluteY="98dp" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName7"
+            android:layout_width="148dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            tools:layout_editor_absoluteX="98dp"
+            tools:layout_editor_absoluteY="186dp" />
+
         <Button
             android:id="@+id/button5"
             android:layout_width="wrap_content"
@@ -25,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
-            tools:layout_editor_absoluteX="281dp"
+            tools:layout_editor_absoluteX="274dp"
             tools:layout_editor_absoluteY="186dp" />
 
         <EditText
@@ -35,28 +55,18 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
-            tools:layout_editor_absoluteX="159dp"
-            tools:layout_editor_absoluteY="288dp" />
+            tools:layout_editor_absoluteX="121dp"
+            tools:layout_editor_absoluteY="287dp" />
 
         <EditText
             android:id="@+id/editTextTextPersonName3"
-            android:layout_width="100dp"
-            android:layout_height="43dp"
+            android:layout_width="208dp"
+            android:layout_height="40dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
-            tools:layout_editor_absoluteX="107dp"
-            tools:layout_editor_absoluteY="421dp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName4"
-            android:layout_width="1000dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            tools:layout_editor_absoluteX="180dp"
-            tools:layout_editor_absoluteY="423dp" />
+            tools:layout_editor_absoluteX="121dp"
+            tools:layout_editor_absoluteY="426dp" />
 
         <EditText
             android:id="@+id/editTextTextPersonName5"
@@ -65,7 +75,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
-            tools:layout_editor_absoluteX="107dp"
+            tools:layout_editor_absoluteX="121dp"
             tools:layout_editor_absoluteY="549dp" />
 
         <EditText
@@ -75,8 +85,8 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Name"
-            tools:layout_editor_absoluteX="281dp"
-            tools:layout_editor_absoluteY="539dp" />
+            tools:layout_editor_absoluteX="261dp"
+            tools:layout_editor_absoluteY="546dp" />
 
         <Button
             android:id="@+id/button7"
@@ -99,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Time"
-            tools:layout_editor_absoluteX="51dp"
+            tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="113dp" />
 
         <TextView
@@ -107,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="End Time"
-            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="195dp" />
 
         <TextView
@@ -115,8 +125,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Keywords"
-            tools:layout_editor_absoluteX="49dp"
-            tools:layout_editor_absoluteY="300dp" />
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="299dp" />
 
         <TextView
             android:id="@+id/textView5"
