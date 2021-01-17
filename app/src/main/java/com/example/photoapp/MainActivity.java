@@ -10,7 +10,10 @@ import androidx.core.content.FileProvider;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     android.widget.Button filter;
     android.widget.Button snap;
+    android.widget.Button next;
+    android.widget.Button prev;
     ImageView imageView;
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -36,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
         filter = (android.widget.Button) findViewById(R.id.button4);
         snap = (android.widget.Button) findViewById(R.id.button3);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.thumbnailid);
+        next = (android.widget.Button) findViewById(R.id.button);
+        prev = (android.widget.Button) findViewById(R.id.button2);
 
         snap.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
@@ -60,6 +67,42 @@ public class MainActivity extends AppCompatActivity {
                                 //}
         );
     }
+
+    public void scrollPhotos(View v) {
+        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+        switch (v.getId()) {
+            case R.id.button2:
+                if (index > 0) {
+                    index--;
+                }
+                break;
+            case R.id.button:
+                if (index < (photos.size() - 1)) {
+                index++;
+            }
+            break;
+            default:
+                break;
+        }
+        displayPhoto(photos.get(index));
+    }
+
+    private void displayPhoto(String path) {
+        ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
+        TextView tv = (TextView) findViewById(R.id.datetimeid);
+        EditText et = (EditText) findViewById(R.id.captionid);
+        if (path == null || path =="") {
+            iv.setImageResource(R.mipmap.ic_launcher);
+            et.setText("");
+            tv.setText("");
+        } else {
+            iv.setImageBitmap(BitmapFactory.decodeFile(path));
+            String[] attr = path.split("_");
+            et.setText(attr[1]);
+            tv.setText(attr[2]);
+        }
+    }
+
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -76,4 +119,15 @@ public class MainActivity extends AppCompatActivity {
             imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
         }
     }
+
+    private void updatePhoto(String path, String caption) {
+        String[] attr = path.split("_");
+        if (attr.length >= 3) {
+            File to = new File(attr[0] + "_" + caption + "_" + attr[2] + "_" + attr[3]);
+            File from = new File(path);
+            from.renameTo(to);
+        }
+    }
+
+
 }
