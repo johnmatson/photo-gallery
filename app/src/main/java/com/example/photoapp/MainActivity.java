@@ -3,6 +3,7 @@ package com.example.photoapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import androidx.core.content.FileProvider;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                                                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                                             }
                                         }
-                                    }``
+                                    }
                                 //}
         );
     }
@@ -72,10 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap finalPhoto = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(finalPhoto);
-
+            imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
         }
     }
 }
