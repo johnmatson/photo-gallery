@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
+    private ArrayList<String> photos = null;
+    private int index = 0;
 
 
     @Override
@@ -35,25 +38,26 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
 
         snap.setOnClickListener(new View.OnClickListener() {
-                                           public void onClick(View v) {
-                                               Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                               /*File photoFile = null;
-                                               try {
-                                                   photoFile = createImageFile();
-                                               } catch (IOException e) {
-                                                   e.printStackTrace();
-                                               }
-                                               if(photoFile != null) {
-                                                   Uri photoURI = FileProvider.getUriForFile(MainActivity.this,
-                                                           "com.example.android.fileprovider",
-                                                           photoFile);
-                                                   takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);*/
-                                                   startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                                               }
-                                           }
-                                       //}
+                                    public void onClick(View v) {
+                                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                                            File photoFile = null;
+                                            try {
+                                                photoFile = createImageFile();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            if (photoFile != null) {
+                                                Uri photoURI = FileProvider.getUriForFile(MainActivity.this,
+                                                        "com.example.photoapp.fileprovider",
+                                                        photoFile);
+                                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                                            }
+                                        }
+                                    }``
+                                //}
         );
-
     }
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -63,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
