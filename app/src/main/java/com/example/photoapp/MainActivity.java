@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
-    private ArrayList<String> photos = null;
+    public ArrayList<String> photos = null;
     private int index = 0;
 
 
@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.thumbnailid);
         next = (android.widget.Button) findViewById(R.id.button);
         prev = (android.widget.Button) findViewById(R.id.button2);
+
+        photos = findPhotos();
+
+        if (photos.size() == 0) {
+            displayPhoto(null);
+        } else {
+            displayPhoto(photos.get(index));
+        }
 
         snap.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
@@ -87,6 +95,19 @@ public class MainActivity extends AppCompatActivity {
         displayPhoto(photos.get(index));
     }
 
+    private ArrayList<String> findPhotos() {
+        File file = new File(Environment.getExternalStorageDirectory()
+                .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
+        ArrayList<String> photos = new ArrayList<String>();
+        File[] fList = file.listFiles();
+        if (fList != null) {
+            for (File f : fList) {
+                photos.add(f.getPath());
+            }
+        }
+        return photos;
+    }
+
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
         TextView tv = (TextView) findViewById(R.id.datetimeid);
@@ -116,7 +137,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);
             imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+            photos = findPhotos();
         }
     }
 
