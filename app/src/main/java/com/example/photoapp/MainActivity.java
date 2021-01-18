@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
 
-        filter = (android.widget.Button) findViewById(R.id.button4);
-        snap = (android.widget.Button) findViewById(R.id.button3);
+        filter = (android.widget.Button) findViewById(R.id.filterid);
+        snap = (android.widget.Button) findViewById(R.id.snapid);
         imageView = (ImageView) findViewById(R.id.thumbnailid);
-        next = (android.widget.Button) findViewById(R.id.button);
-        prev = (android.widget.Button) findViewById(R.id.button2);
+        next = (android.widget.Button) findViewById(R.id.nextid);
+        prev = (android.widget.Button) findViewById(R.id.previd);
 
         photos = findPhotos();
 
@@ -74,26 +74,30 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 //}
         );
-    }
 
-    public void scrollPhotos(View v) {
-        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
-        switch (v.getId()) {
-            case R.id.button2:
-                if (index > 0) {
-                    index--;
-                }
-                break;
-            case R.id.button:
-                if (index < (photos.size() - 1)) {
-                index++;
-            }
-            break;
-            default:
-                break;
-        }
-        displayPhoto(photos.get(index));
+        next.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+                                        if (index < (photos.size() - 1)) {
+                                            index++;
+                                        }
+                                        displayPhoto(photos.get(index));
+                                    }
+                                }
+        );
+
+        prev.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v) {
+                                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+                                        if (index > 0) {
+                                            index--;
+                                        }
+                                        displayPhoto(photos.get(index));
+                                    }
+                                }
+        );
     }
+    
 
     private ArrayList<String> findPhotos() {
         File file = new File(Environment.getExternalStorageDirectory()
