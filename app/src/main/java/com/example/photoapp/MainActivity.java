@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();
+        showText(image.getAbsolutePath());
         return image;
     }
 
@@ -152,5 +154,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void showText(String text){
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
 }
