@@ -28,13 +28,15 @@ public class MainActivity extends AppCompatActivity {
     android.widget.Button next;
     android.widget.Button prev;
     ImageView imageView;
-
+    boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
     public ArrayList<String> photos = null;
     private int index = 0;
 
-
+    public void showText(String text){
+        if(debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,8 +160,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showText(String text){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
 
 }
