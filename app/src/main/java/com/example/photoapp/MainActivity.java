@@ -42,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
 
-        filter = (android.widget.Button) findViewById(R.id.filterid);
-        snap = (android.widget.Button) findViewById(R.id.snapid);
-        imageView = (ImageView) findViewById(R.id.thumbnailid);
-        next = (android.widget.Button) findViewById(R.id.nextid);
-        prev = (android.widget.Button) findViewById(R.id.previd);
-
         photos = findPhotos();
 
         if (photos.size() == 0) {
@@ -55,52 +49,45 @@ public class MainActivity extends AppCompatActivity {
         } else {
             displayPhoto(photos.get(index));
         }
-
-        snap.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                            File photoFile = null;
-                                            try {
-                                                photoFile = createImageFile();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            if (photoFile != null) {
-                                                Uri photoURI = FileProvider.getUriForFile(MainActivity.this,
-                                                        "com.example.photoapp.fileprovider",
-                                                        photoFile);
-                                                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                                            }
-                                        }
-                                    }
-                                //}
-        );
-
-        next.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
-                                        if (index < (photos.size() - 1)) {
-                                            index++;
-                                        }
-                                        displayPhoto(photos.get(index));
-                                    }
-                                }
-        );
-
-        prev.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
-                                        if (index > 0) {
-                                            index--;
-                                        }
-                                        displayPhoto(photos.get(index));
-                                    }
-                                }
-        );
     }
-    
+
+    public void click_snap(View v) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    public void click_prev(View v) {
+        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+        if (index < (photos.size() - 1)) {
+            index++;
+        }
+        displayPhoto(photos.get(index));
+    }
+
+    public void click_next(View v) {
+        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+        if (index > 0) {
+            index--;
+        }
+        displayPhoto(photos.get(index));
+    }
+
+    public void click_filter(View v) {
+
+    }
 
     private ArrayList<String> findPhotos() {
         File file = new File(Environment.getExternalStorageDirectory()
@@ -146,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
+            mImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
             photos = findPhotos();
         }
     }

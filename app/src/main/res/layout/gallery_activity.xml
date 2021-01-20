@@ -57,37 +57,40 @@
             android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:text="◀ prev"
+            android:onClick="click_prev"
             app:backgroundTint="#609ACA" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/snapid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="1"
+            android:onClick="click_snap"
+            android:text="Snap"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
 
         <Button
             android:id="@+id/nextid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:text="next ▶"
-            app:backgroundTint="#609ACA" />
-
-        <Button
-            android:id="@+id/snapid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_weight="1"
-            android:text="Snap"
-            app:backgroundTint="#609ACA" />
-
-        <Button
-            android:id="@+id/filterid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_weight="1"
-            android:text="Search"
+            android:onClick="click_next"
             app:backgroundTint="#609ACA" />
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/filterid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:onClick="click_filter"
+        android:text="Search"
+        app:backgroundTint="#609ACA" />
 
 </LinearLayout>
