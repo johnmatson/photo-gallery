@@ -28,6 +28,14 @@ public class UITest {
         //Espresso.onView(withId(R.id.editText)).perform(ViewActions.typeText("HELLO"), ViewActions.closeSoftKeyboard());
         //Espresso.onView(withId(R.id.button)).perform(ViewActions.click());
         //Espresso.onView(withId(R.id.textView)).check(ViewAssertions.matches(ViewMatchers.withText("HELLO")));
+        onView(withId(R.id.filterid)).perform(click());
+        onView(withId(R.id.etFromDateTime)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.etToDateTime)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.etKeywords)).perform(typeText("caption"), closeSoftKeyboard());
+        onView(withId(R.id.go)).perform(click());
+        onView(withId(R.id.captionid)).check(matches(withText("caption")));
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
     }
 }
 
