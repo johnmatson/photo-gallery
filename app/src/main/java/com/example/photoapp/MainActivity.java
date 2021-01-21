@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
-                if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() && f.lastModified() <= endTimestamp.getTime())) && (keywords == "" || f.getPath().contains(keywords)))
+                if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() && f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)))
                     photos.add(f.getPath());
             }
         }
