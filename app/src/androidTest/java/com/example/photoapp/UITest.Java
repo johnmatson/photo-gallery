@@ -28,6 +28,14 @@ public class UITest {
         //Espresso.onView(withId(R.id.editText)).perform(ViewActions.typeText("HELLO"), ViewActions.closeSoftKeyboard());
         //Espresso.onView(withId(R.id.button)).perform(ViewActions.click());
         //Espresso.onView(withId(R.id.textView)).check(ViewAssertions.matches(ViewMatchers.withText("HELLO")));
+
+        //What needs to be automated and tested
+        //Test taking a photo
+        //Test making sure photo has been saved with name
+        //Test Left and Right buttons to go through photos
+        //Test Search by date functionality.
+
+
         onView(withId(R.id.filterid)).perform(click());
         onView(withId(R.id.etFromDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etToDateTime)).perform(typeText(""), closeSoftKeyboard());
@@ -36,6 +44,8 @@ public class UITest {
         onView(withId(R.id.captionid)).check(matches(withText("caption")));
         onView(withId(R.id.nextid)).perform(click());
         onView(withId(R.id.previd)).perform(click());
+
+
     }
 }
 
