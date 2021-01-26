@@ -65,6 +65,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.935"
+            android:onClick="cancel"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -78,6 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.935"
+            android:onClick="go"
             tools:ignore="MissingConstraints" />
 
         <TextView
