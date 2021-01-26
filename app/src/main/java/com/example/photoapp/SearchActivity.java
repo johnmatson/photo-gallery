@@ -26,9 +26,11 @@ public class SearchActivity extends AppCompatActivity{
                     "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(tomorrow));
         } catch (Exception ex) { }
     }
+
     public void cancel(final View v) {
         finish();
     }
+
     public void go(final View v) {
         Intent i = new Intent();
         EditText from = (EditText) findViewById(R.id.etFromDateTime);
@@ -40,4 +42,5 @@ public class SearchActivity extends AppCompatActivity{
         setResult(RESULT_OK, i);
         finish();
     }
+
 }

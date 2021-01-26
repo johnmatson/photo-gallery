@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int SEARCH_ACTIVITY_REQUEST_CODE = 1;
+    public static final int SEARCH_ACTIVITY_REQUEST_CODE = 1;
     String mCurrentPhotoPath;
     public ArrayList<String> photos = null;
     private int index = 0;
@@ -86,9 +86,13 @@ public class MainActivity extends AppCompatActivity {
         displayPhoto(photos.get(index));
     }
 
-    public void click_filter(View v) {
+    public void filter(View v) {
 
-    }
+        Intent i = new Intent(MainActivity.this, SearchActivity.class);
+
+        startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
+
+    };
 
     private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
