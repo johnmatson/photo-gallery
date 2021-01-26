@@ -5,8 +5,12 @@ import android.view.View; import android.widget.EditText;
 import java.text.DateFormat; import java.text.SimpleDateFormat;
 import java.util.Calendar; import java.util.Date;
 import java.util.Locale;
+<<<<<<< Updated upstream
 
 public class SearchActivity extends AppCompatActivity{
+=======
+public class SearchActivity extends AppCompatActivity {
+>>>>>>> Stashed changes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +30,17 @@ public class SearchActivity extends AppCompatActivity{
                     "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(tomorrow));
         } catch (Exception ex) { }
     }
+<<<<<<< Updated upstream
 
     public void cancel(final View v) {
         finish();
     }
 
+=======
+    public void cancel(final View v) {
+        finish();
+    }
+>>>>>>> Stashed changes
     public void go(final View v) {
         Intent i = new Intent();
         EditText from = (EditText) findViewById(R.id.etFromDateTime);
@@ -42,5 +52,9 @@ public class SearchActivity extends AppCompatActivity{
         setResult(RESULT_OK, i);
         finish();
     }
+<<<<<<< Updated upstream
 
 }
+=======
+}
+>>>>>>> Stashed changes
