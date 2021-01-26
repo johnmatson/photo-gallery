@@ -13,17 +13,17 @@ public class SearchActivity extends AppCompatActivity{
         setContentView(R.layout.search_activity);
         try {
             Calendar calendar = Calendar.getInstance();
-            DateFormat format = new SimpleDateFormat("yyyy‐MM‐dd");
+            DateFormat format = new SimpleDateFormat("yyyyMMdd");
             Date now = calendar.getTime();
-            String todayStr = new SimpleDateFormat("yyyy‐MM‐dd", Locale.getDefault()).format(now);
+            String todayStr = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(now);
             Date today = format.parse((String) todayStr);
             calendar.add(Calendar.DAY_OF_YEAR, 1);
-            String tomorrowStr = new SimpleDateFormat("yyyy‐MM‐dd", Locale.getDefault()).format( calendar.getTime());
+            String tomorrowStr = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format( calendar.getTime());
             Date tomorrow = format.parse((String) tomorrowStr);
             ((EditText) findViewById(R.id.etStartDateTime)).setText(new SimpleDateFormat(
-                    "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(today));
+                    "yyyyMMdd HHmmss", Locale.getDefault()).format(today));
             ((EditText) findViewById(R.id.etEndDateTime)).setText(new SimpleDateFormat(
-                    "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(tomorrow));
+                    "yyyyMMdd HHmmss", Locale.getDefault()).format(tomorrow));
         } catch (Exception ex) { }
     }
 

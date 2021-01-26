@@ -32,9 +32,9 @@ public class UITest {
         //Test Search by date functionality.
 
 
-        onView(withId(R.id.filterid)).perform(click());
+        onView(withId(R.id.filter)).perform(click());
         onView(withId(R.id.etStartDateTime)).perform(typeText(""), closeSoftKeyboard());
-        onView(withId(R.id.etToDateTime)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.etEndDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etKeywords)).perform(typeText("caption"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
         onView(withId(R.id.captionid)).check(matches(withText("caption")));
