@@ -23,11 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    android.widget.Button filter;
-    android.widget.Button snap;
-    android.widget.Button next;
-    android.widget.Button prev;
-    ImageView imageView;
     boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final int SEARCH_ACTIVITY_REQUEST_CODE = 10;
