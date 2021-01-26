@@ -20,9 +20,9 @@ public class SearchActivity extends AppCompatActivity{
             calendar.add(Calendar.DAY_OF_YEAR, 1);
             String tomorrowStr = new SimpleDateFormat("yyyy‐MM‐dd", Locale.getDefault()).format( calendar.getTime());
             Date tomorrow = format.parse((String) tomorrowStr);
-            ((EditText) findViewById(R.id.etFromDateTime)).setText(new SimpleDateFormat(
+            ((EditText) findViewById(R.id.etStartDateTime)).setText(new SimpleDateFormat(
                     "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(today));
-            ((EditText) findViewById(R.id.etToDateTime)).setText(new SimpleDateFormat(
+            ((EditText) findViewById(R.id.etEndDateTime)).setText(new SimpleDateFormat(
                     "yyyy‐MM‐dd HH:mm:ss", Locale.getDefault()).format(tomorrow));
         } catch (Exception ex) { }
     }
@@ -33,8 +33,8 @@ public class SearchActivity extends AppCompatActivity{
 
     public void go(final View v) {
         Intent i = new Intent();
-        EditText from = (EditText) findViewById(R.id.etFromDateTime);
-        EditText to = (EditText) findViewById(R.id.etToDateTime);
+        EditText from = (EditText) findViewById(R.id.etStartDateTime);
+        EditText to = (EditText) findViewById(R.id.etEndDateTime);
         EditText keywords = (EditText) findViewById(R.id.etKeywords);
         i.putExtra("STARTTIMESTAMP", from.getText() != null ? from.getText().toString() : "");
         i.putExtra("ENDTIMESTAMP", to.getText() != null ? to.getText().toString() : "");

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView;
     boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
-    public static final int SEARCH_ACTIVITY_REQUEST_CODE = 1;
+    public static final int SEARCH_ACTIVITY_REQUEST_CODE = 10;
     String mCurrentPhotoPath;
     public ArrayList<String> photos = null;
     private int index = 0;

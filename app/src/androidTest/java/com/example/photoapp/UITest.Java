@@ -1,8 +1,4 @@
 package com.example.photoapp;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.espresso.assertion.ViewAssertions;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.rule.ActivityTestRule;
 
 
@@ -29,7 +25,7 @@ public class UITest {
         //Espresso.onView(withId(R.id.button)).perform(ViewActions.click());
         //Espresso.onView(withId(R.id.textView)).check(ViewAssertions.matches(ViewMatchers.withText("HELLO")));
         onView(withId(R.id.filterid)).perform(click());
-        onView(withId(R.id.etFromDateTime)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.etStartDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etToDateTime)).perform(typeText(""), closeSoftKeyboard());
         onView(withId(R.id.etKeywords)).perform(typeText("caption"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
