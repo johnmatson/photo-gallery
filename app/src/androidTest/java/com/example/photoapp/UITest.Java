@@ -14,12 +14,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
+
 public class UITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
     @Test
     public void ensureTextChangesWork() {
         //Automated UI Test for search Activity
+
 
         onView(withId(R.id.filter)).perform(click());
         onView(withId(R.id.etStartDateTime)).perform(typeText("20210120 000000"), closeSoftKeyboard());
@@ -29,6 +31,7 @@ public class UITest {
         onView(withId(R.id.captionid)).check(matches(withText("Potato")));
         onView(withId(R.id.nextid)).perform(click());
         onView(withId(R.id.previd)).perform(click());
+
 
 
     }
