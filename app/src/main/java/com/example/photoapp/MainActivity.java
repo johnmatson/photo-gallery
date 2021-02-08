@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             displayPhoto(photos.get(index));
         }
-<<<<<<< Updated upstream
-=======
 
         View.OnClickListener sharehandler = new View.OnClickListener() {
             public void onClick(View v) {
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         };
         findViewById(R.id.shareid).setOnClickListener(sharehandler);
 
->>>>>>> Stashed changes
     }
 
     public void click_snap(View v) {
