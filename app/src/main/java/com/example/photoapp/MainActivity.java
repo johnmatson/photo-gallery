@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
 
+
         photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
 
         if (photos.size() == 0) {
@@ -45,6 +46,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             displayPhoto(photos.get(index));
         }
+<<<<<<< Updated upstream
+=======
+
+        View.OnClickListener sharehandler = new View.OnClickListener() {
+            public void onClick(View v) {
+                shareImage();
+            }
+        };
+        findViewById(R.id.shareid).setOnClickListener(sharehandler);
+
+>>>>>>> Stashed changes
     }
 
     public void click_snap(View v) {
@@ -169,5 +181,23 @@ public class MainActivity extends AppCompatActivity {
             File from = new File(path);
             from.renameTo(to);
         }
+    }
+
+    private void shareImage() {
+        String PACKAGE_NAME = "com.example.photoapp";
+
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // If you want to share a png image only, you can do:
+        // setType("image/png"); OR for jpeg: setType("image/jpeg");
+        share.setType("image/*");
+        share.putExtra(Intent.EXTRA_TEXT, ((EditText) findViewById(R.id.captionid)).getText().toString());
+        share.putExtra(Intent.EXTRA_SUBJECT, "" + ((EditText) findViewById(R.id.captionid)).getText().toString());
+        File file = new File(photos.get(index));
+        Uri uri = Uri.fromFile(file);
+//        share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.setPackage(PACKAGE_NAME);
+        System.out.print(file);
+        startActivity(Intent.createChooser(share, "Share to"));
     }
 }
