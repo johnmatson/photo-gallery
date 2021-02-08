@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void shareImage() {
-        String PACKAGE_NAME = "com.example.photoapp";
+        //String PACKAGE_NAME = "com.example.photoapp";
 
         Intent share = new Intent(Intent.ACTION_SEND);
 
@@ -192,11 +192,9 @@ public class MainActivity extends AppCompatActivity {
         share.setType("image/*");
         share.putExtra(Intent.EXTRA_TEXT, ((EditText) findViewById(R.id.captionid)).getText().toString());
         share.putExtra(Intent.EXTRA_SUBJECT, "" + ((EditText) findViewById(R.id.captionid)).getText().toString());
-        File file = new File(photos.get(index));
-        Uri uri = Uri.fromFile(file);
-//        share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.setPackage(PACKAGE_NAME);
-        System.out.print(file);
+        Uri fileUri = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", new File(photos.get(index)));
+        //share.setPackage(PACKAGE_NAME);
+        share.putExtra(Intent.EXTRA_STREAM, fileUri);
         startActivity(Intent.createChooser(share, "Share to"));
     }
 }
