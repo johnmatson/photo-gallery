@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
             }
         }
     }
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
             File from = new File(path);
             from.renameTo(to);
         }
+        photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
     }
 
     private void shareImage() {
