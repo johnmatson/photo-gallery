@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> photos = null;
     private int index = 0;
 
-    String apiKey = BuildConfig.API_KEY;
+    //String apiKey = BuildConfig.API_KEY;
 
     public void showText(String text){
         if(debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
