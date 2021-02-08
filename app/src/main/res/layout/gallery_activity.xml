@@ -93,4 +93,10 @@
         android:text="Search"
         app:backgroundTint="#609ACA" />
 
+    <Button
+        android:id="@+id/shareid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share" />
+
 </LinearLayout>

@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             displayPhoto(photos.get(index));
         }
+
+
     }
 
     public void click_snap(View v) {
