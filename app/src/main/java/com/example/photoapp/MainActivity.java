@@ -102,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
-                            textloc = String.valueOf(location.getLatitude()) + "_" + String.valueOf(location.getLongitude());
+                            textloc = Location.convert(location.getLatitude(), Location.FORMAT_DEGREES) + "_" + Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
                         }
                         else{
-                            textloc = "This is Null bro";
+                            textloc = "0.00000_0.00000";
+                            showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
                 });
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_L" + textloc + "_";
+        String imageFileName = "JPEG_" + timeStamp + "_" + textloc + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();
