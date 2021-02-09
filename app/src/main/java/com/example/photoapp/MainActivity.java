@@ -3,6 +3,7 @@ package com.example.photoapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> photos = null;
     private int index = 0;
     private FusedLocationProviderClient fusedLocationClient;
+    public String textloc;
 
     //String apiKey = BuildConfig.API_KEY;
 
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
-
 
 
         photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -99,9 +102,14 @@ public class MainActivity extends AppCompatActivity {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
+                            textloc = String.valueOf(location.getLatitude()) + "_" + String.valueOf(location.getLongitude());
+                        }
+                        else{
+                            textloc = "This is Null bro";
                         }
                     }
                 });
+
     }
 
     public void click_snap(View v) {
@@ -146,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
 
-    };
+    }
+
+    ;
 
     private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
@@ -166,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
         TextView tv = (TextView) findViewById(R.id.datetimeid);
         EditText et = (EditText) findViewById(R.id.captionid);
-        if (path == null || path =="") {
+        if (path == null || path == "") {
             iv.setImageResource(R.mipmap.ic_launcher);
             et.setText("");
             tv.setText("");
@@ -178,9 +188,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private File createImageFile() throws IOException{
+    private File createImageFile() throws IOException {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "JPEG_" + timeStamp + "_L" + textloc + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();
@@ -232,8 +243,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void shareImage() {
-        //String PACKAGE_NAME = "com.example.photoapp";
-
         Intent share = new Intent(Intent.ACTION_SEND);
 
         // If you want to share a png image only, you can do:
@@ -242,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         share.putExtra(Intent.EXTRA_TEXT, ((EditText) findViewById(R.id.captionid)).getText().toString());
         share.putExtra(Intent.EXTRA_SUBJECT, "" + ((EditText) findViewById(R.id.captionid)).getText().toString());
         Uri fileUri = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", new File(photos.get(index)));
-        //share.setPackage(PACKAGE_NAME);
         share.putExtra(Intent.EXTRA_STREAM, fileUri);
         startActivity(Intent.createChooser(share, "Share to"));
     }
