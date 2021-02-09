@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<String> photos = null;
     private int index = 0;
     private FusedLocationProviderClient fusedLocationClient;
-    public String textloc;
+    public String latloc;
+    public String longloc;
 
     //String apiKey = BuildConfig.API_KEY;
 
@@ -102,15 +103,16 @@ public class MainActivity extends AppCompatActivity {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
-                            textloc = Location.convert(location.getLatitude(), Location.FORMAT_DEGREES) + "_" + Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
+                            latloc = Location.convert(location.getLatitude(), Location.FORMAT_DEGREES);
+                            longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
                         }
                         else{
-                            textloc = "0.00000_0.00000";
+                            latloc = "0.00000";
+                            longloc = "0.00000";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
                 });
-
     }
 
     public void click_snap(View v) {
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_" + textloc + "_";
+        String imageFileName = "JPEG_" + timeStamp + "_" + latloc + "_" + longloc + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         mCurrentPhotoPath = image.getAbsolutePath();

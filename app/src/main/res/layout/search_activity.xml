@@ -12,6 +12,59 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="93dp">
 
+        <TextView
+            android:id="@+id/latitudeid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latitude"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/longitudeid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longitude"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.626"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/etlongitude"
+            android:layout_width="207dp"
+            android:layout_height="43dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.642"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.635"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/etlatitude"
+            android:layout_width="207dp"
+            android:layout_height="43dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.642"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51"
+            tools:ignore="MissingConstraints" />
+
         <EditText
             android:id="@+id/etKeywords"
             android:layout_width="207dp"
