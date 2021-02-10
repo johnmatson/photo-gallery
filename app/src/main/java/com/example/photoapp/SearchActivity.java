@@ -54,6 +54,7 @@ public class SearchActivity extends AppCompatActivity{
         i.putExtra("ENDTIMESTAMP", to.getText() != null ? to.getText().toString() : "");
         i.putExtra("KEYWORDS", keywords.getText() != null ? keywords.getText().toString() : "");
 
+
         //photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
 
         //top left
@@ -67,8 +68,6 @@ public class SearchActivity extends AppCompatActivity{
         float longmax = Float.parseFloat(rightlong.getText().toString());
         i.putExtra("LATMIN", latmin);
         i.putExtra("LONGMAX", longmax);
-
-
 
         /*for(int j=0 ; j < photos.size() ; j++){
             String name = photos.get(j);

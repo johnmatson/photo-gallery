@@ -93,16 +93,6 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
 
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -161,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
 
-
     private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords, float latmin, float latmax, float longmin, float longmax) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
@@ -174,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
                 float flat = Float.parseFloat(splitname2[3]);
                 float flong = Float.parseFloat(splitname2[4]);
-
 
                 if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() &&
                         f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)) &&
@@ -198,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
         return photos;
     }
-
-
 
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
@@ -296,4 +282,6 @@ public class MainActivity extends AppCompatActivity {
         share.putExtra(Intent.EXTRA_STREAM, fileUri);
         startActivity(Intent.createChooser(share, "Share to"));
     }
+
+
 }
