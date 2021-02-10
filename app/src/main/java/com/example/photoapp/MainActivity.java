@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
                             longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
                         }
                         else{
-                            latloc = "0.00000";
-                            longloc = "0.00000";
+                            latloc = "0-00000";
+                            longloc = "0-00000";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
@@ -231,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
-            photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
         }
     }
 
