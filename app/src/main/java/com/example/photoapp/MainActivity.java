@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -119,20 +120,16 @@ public class MainActivity extends AppCompatActivity {
     public void click_snap(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null; //raymond thinks white photo is appearing here
             try {
-
+                File photoFile = null;
                 photoFile = createImageFile();
-
+                if (photoFile != null) { // Continue only if the File was successfully created
+                    Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
             }
         }
     }
@@ -225,17 +222,23 @@ public class MainActivity extends AppCompatActivity {
                     displayPhoto(photos.get(index));
                 }
             }
+
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
         }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_CANCELED){
+            File image = new File(mCurrentPhotoPath);
+            image.delete();
+        }
     }
 
     private void updatePhoto(String path, String caption) {
         String[] attr = path.split("_");
-        if (attr.length >= 3) {
-            File to = new File(attr[0] + "_" + caption + "_" + attr[2] + "_" + attr[3]);
+        if (attr.length >= 5) {
+            File to = new File(attr[0] + "_" + caption + "_" + attr[2] + "_" + attr[3] + "_" + attr[4] + "_" + attr[5]);
             File from = new File(path);
             from.renameTo(to);
         }
