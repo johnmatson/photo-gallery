@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
 
+
         if (photos.size() == 0) {
             displayPhoto(null);
         } else {
@@ -107,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
                             longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
                         }
                         else{
-                            latloc = "0.00000";
-                            longloc = "0.00000";
+                            latloc = "0-00000";
+                            longloc = "0-00000";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
@@ -118,19 +120,16 @@ public class MainActivity extends AppCompatActivity {
     public void click_snap(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
             try {
+                File photoFile = null;
                 photoFile = createImageFile();
-
+                if (photoFile != null) { // Continue only if the File was successfully created
+                    Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
             }
         }
     }
@@ -152,14 +151,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filter(View v) {
-
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
-
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
-
     }
 
-    ;
 
     private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
@@ -229,18 +224,23 @@ public class MainActivity extends AppCompatActivity {
                     displayPhoto(photos.get(index));
                 }
             }
+
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);
             mImageView.setImageBitmap(BitmapFactory.decodeFile(mCurrentPhotoPath));
-            photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_CANCELED){
+            File image = new File(mCurrentPhotoPath);
+            image.delete();
         }
     }
 
     private void updatePhoto(String path, String caption) {
         String[] attr = path.split("_");
-        if (attr.length >= 3) {
-            File to = new File(attr[0] + "_" + caption + "_" + attr[2] + "_" + attr[3]);
+        if (attr.length >= 5) {
+            File to = new File(attr[0] + "_" + caption + "_" + attr[2] + "_" + attr[3] + "_" + attr[4] + "_" + attr[5]);
             File from = new File(path);
             from.renameTo(to);
         }
