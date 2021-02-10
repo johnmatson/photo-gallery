@@ -105,10 +105,11 @@ public class MainActivity extends AppCompatActivity {
                             // Logic to handle location object
                             latloc = Location.convert(location.getLatitude(), Location.FORMAT_DEGREES);
                             longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
+
                         }
                         else{
-                            latloc = "0.00000";
-                            longloc = "0.00000";
+                            latloc = "0-00000";
+                            longloc = "0-00000";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
@@ -118,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
     public void click_snap(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
+            File photoFile = null; //raymond thinks white photo is appearing here
             try {
+
                 photoFile = createImageFile();
 
             } catch (IOException ex) {
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri photoURI = FileProvider.getUriForFile(this, "com.example.photoapp.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
+
             }
         }
     }
@@ -152,14 +154,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filter(View v) {
-
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
-
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
-
     }
 
-    ;
 
     private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
