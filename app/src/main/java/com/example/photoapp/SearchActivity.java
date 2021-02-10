@@ -54,40 +54,35 @@ public class SearchActivity extends AppCompatActivity{
         i.putExtra("ENDTIMESTAMP", to.getText() != null ? to.getText().toString() : "");
         i.putExtra("KEYWORDS", keywords.getText() != null ? keywords.getText().toString() : "");
 
-        //photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
+        photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
 
         //top left
         float latmax = Float.parseFloat(leftlat.getText().toString());
         float longmin = Float.parseFloat(leftlong.getText().toString());
-        i.putExtra("LATMAX",latmax);
-        i.putExtra("LONGMIN",longmin);
 
         //bottom right
         float latmin = Float.parseFloat(rightlat.getText().toString());
         float longmax = Float.parseFloat(rightlong.getText().toString());
-        i.putExtra("LATMIN", latmin);
-        i.putExtra("LONGMAX", longmax);
 
-
-
-        /*for(int j=0 ; j < photos.size() ; j++){
+        for(int j=0 ; j < photos.size() ; j++){
             String name = photos.get(j);
             String[] splitname = name.split("/");
             String[] splitname2 = splitname[splitname.length-1].split("_");
             flat = Float.parseFloat(splitname2[3]);
             flong = Float.parseFloat(splitname2[4]);
             if(flat > latmin && flat < latmax && flong > longmin && flong < longmax){
-                loclist.add(j);
+                loclist.add(1);
+            }
+            else {
+                loclist.add(0);
             }
         }
-
-        i.putIntegerArrayListExtra("LOCLIST", loclist);*/
 
         setResult(RESULT_OK, i);
         finish();
     }
 
-    /*public static ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
+    public static ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
         ArrayList<String> photos = new ArrayList<String>();
@@ -99,6 +94,6 @@ public class SearchActivity extends AppCompatActivity{
             }
         }
         return photos;
-    }*/
+    }
 
 }
