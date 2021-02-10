@@ -27,9 +27,9 @@ public class ExampleInstrumentedTest {
         //Open Search Activity
         onView(withId(R.id.filter)).perform(click());
         //Type in Search criteria
-        onView(withId(R.id.latitudeid)).perform(replaceText("80"), closeSoftKeyboard());
+        onView(withId(R.id.latitudeid)).perform(replaceText("90"), closeSoftKeyboard());
         onView(withId(R.id.longitudeid)).perform(replaceText("-110"), closeSoftKeyboard());
-        onView(withId(R.id.latitudeid2)).perform(replaceText("90"), closeSoftKeyboard());
+        onView(withId(R.id.latitudeid2)).perform(replaceText("70"), closeSoftKeyboard());
         onView(withId(R.id.longitudeid2)).perform(replaceText("-90"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
 
