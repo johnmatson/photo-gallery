@@ -51,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     public String latloc;
     public String longloc;
+
+    private Date startTimestamp;
+    private Date endTimestamp;
+    private String keywords;
+    private float latmin;
+    private float latmax;
+    private float longmin;
+    private float longmax;
+    private boolean filtered = false;
+
     public ArrayList<Integer> loclist = new ArrayList<Integer>();
 
     //String apiKey = BuildConfig.API_KEY;
@@ -63,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
-
+        startTimestamp = null;
+        endTimestamp = null;
+        keywords = null;
 
         photos = findPhotos();
 
@@ -131,19 +143,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void click_prev(View v) {
-        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
-        if (index < (photos.size() - 1)) {
-            index++;
+        if(photos.size()>0) {
+            updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+            if (index < (photos.size() - 1)) {
+                index++;
+            }
+            displayPhoto(photos.get(index));
         }
-        displayPhoto(photos.get(index));
     }
 
     public void click_next(View v) {
-        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
-        if (index > 0) {
-            index--;
+        if(photos.size()>0) {
+            updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+            if (index > 0) {
+                index--;
+            }
+            displayPhoto(photos.get(index));
         }
-        displayPhoto(photos.get(index));
     }
 
     public void filter(View v) {
@@ -151,41 +167,35 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
 
-    private ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords, float latmin, float latmax, float longmin, float longmax) {
+    private ArrayList<String> findPhotos() {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
         ArrayList<String> photos = new ArrayList<String>();
         File[] fList = file.listFiles();
         if (fList != null) {
             for (File f : fList) {
-                String[] splitname = f.getPath().split("/");
-                String[] splitname2 = splitname[splitname.length-1].split("_");
+                if(filtered) {
+                    String[] splitname = f.getPath().split("/");
+                    String[] splitname2 = splitname[splitname.length - 1].split("_");
 
-                float flat = Float.parseFloat(splitname2[3]);
-                float flong = Float.parseFloat(splitname2[4]);
+                    float flat = Float.parseFloat(splitname2[3]);
+                    float flong = Float.parseFloat(splitname2[4]);
+                    float aaa = (float) 0.0;
 
-                if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() &&
-                        f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)) &&
-                        (flat > latmin && flat < latmax && flong > longmin && flong < longmax))
+                    // if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() &&
+                    //        f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)) &&
+                    //        (flat > latmin && flat < latmax && flong > longmin && flong < longmax))
+                    if (flat > latmin && flat < latmax && flong > longmin && flong < longmax)
+                        photos.add(f.getPath());
+                }
+                else{
                     photos.add(f.getPath());
+                }
             }
         }
         return photos;
     }
 
-    private ArrayList<String> findPhotos(){
-        File file = new File(Environment.getExternalStorageDirectory()
-                .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
-        ArrayList<String> photos = new ArrayList<String>();
-        File[] fList = file.listFiles();
-        if (fList != null) {
-            for (File f : fList) {
-                photos.add(f.getPath());
-            }
-        }
-
-        return photos;
-    }
 
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
@@ -221,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 DateFormat format = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
-                Date startTimestamp, endTimestamp;
                 try {
                     String from = (String) data.getStringExtra("STARTTIMESTAMP");
                     String to = (String) data.getStringExtra("ENDTIMESTAMP");
@@ -232,14 +241,17 @@ public class MainActivity extends AppCompatActivity {
                     endTimestamp = null;
                 }
 
-                float latmin = data.getFloatExtra("LATMIN", (float)0.0);
-                float latmax = data.getFloatExtra("LATMAX", (float)0.0);
-                float longmin = data.getFloatExtra("LONGMIN", (float)0.0);
-                float longmax = data.getFloatExtra("LONGMAX", (float)0.0);
+                latmin = data.getFloatExtra("LATMIN", (float)0.0);
+                latmax = data.getFloatExtra("LATMAX", (float)0.0);
+                longmin = data.getFloatExtra("LONGMIN", (float)0.0);
+                longmax = data.getFloatExtra("LONGMAX", (float)0.0);
 
-                String keywords = (String) data.getStringExtra("KEYWORDS");
+                keywords = (String) data.getStringExtra("KEYWORDS");
                 index = 0;
-                photos = findPhotos(startTimestamp, endTimestamp, keywords, latmin, latmax, longmin, longmax);
+
+                filtered = true;
+                photos = findPhotos();
+
                 if (photos.size() == 0) {
                     displayPhoto(null);
                 } else {
@@ -247,7 +259,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-
         }
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView mImageView = (ImageView) findViewById(R.id.thumbnailid);

@@ -56,18 +56,22 @@ public class SearchActivity extends AppCompatActivity{
 
 
         //photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
+        float deflatmin = -90;
+        float deflatmax = 90;
+        float deflonmin = -180;
+        float deflonmax = 180;
+
+        String latmax_str = leftlat.getText().toString();
+        String lonmin_str = leftlong.getText().toString();
+        String latmin_str = rightlat.getText().toString();
+        String lonmax_str = rightlong.getText().toString();
 
         //top left
-        float latmax = Float.parseFloat(leftlat.getText().toString());
-        float longmin = Float.parseFloat(leftlong.getText().toString());
-        i.putExtra("LATMAX",latmax);
-        i.putExtra("LONGMIN",longmin);
-
+        i.putExtra("LATMAX", latmax_str.equals("")? deflatmax : Float.parseFloat(latmax_str));
+        i.putExtra("LONGMIN", lonmin_str.equals("")? deflonmin : Float.parseFloat(lonmin_str));
         //bottom right
-        float latmin = Float.parseFloat(rightlat.getText().toString());
-        float longmax = Float.parseFloat(rightlong.getText().toString());
-        i.putExtra("LATMIN", latmin);
-        i.putExtra("LONGMAX", longmax);
+        i.putExtra("LATMIN", latmin_str.equals("")? deflatmin : Float.parseFloat(latmin_str));
+        i.putExtra("LONGMAX", lonmax_str.equals("")? deflonmax : Float.parseFloat(lonmax_str));
 
         /*for(int j=0 ; j < photos.size() ; j++){
             String name = photos.get(j);
