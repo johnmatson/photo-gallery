@@ -219,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                     endTimestamp = null;
                 }
                 String keywords = (String) data.getStringExtra("KEYWORDS");
+                String latitude = (String) data.getStringExtra("LATITUDE");
+                String longitude = (String) data.getStringExtra("LONGITUDE");
                 index = 0;
                 photos = findPhotos(startTimestamp, endTimestamp, keywords);
                 if (photos.size() == 0) {
