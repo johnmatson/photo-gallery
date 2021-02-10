@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                         else{
-                            latloc = "0-00000";
-                            longloc = "0-00000";
+                            latloc = "0.00000";
+                            longloc = "0.00000";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
