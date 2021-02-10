@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
 
-
         photos = findPhotos(new Date(Long.MIN_VALUE), new Date(), "");
 
         if (photos.size() == 0) {
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                             // Logic to handle location object
                             latloc = Location.convert(location.getLatitude(), Location.FORMAT_DEGREES);
                             longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
-
                         }
                         else{
                             latloc = "0-00000";
