@@ -27,10 +27,10 @@ public class ExampleInstrumentedTest {
         //Open Search Activity
         onView(withId(R.id.filter)).perform(click());
         //Type in Search criteria
-        onView(withId(R.id.latitudeid)).perform(replaceText("90"), closeSoftKeyboard());
-        onView(withId(R.id.longitudeid)).perform(replaceText("-110"), closeSoftKeyboard());
-        onView(withId(R.id.latitudeid2)).perform(replaceText("70"), closeSoftKeyboard());
-        onView(withId(R.id.longitudeid2)).perform(replaceText("-90"), closeSoftKeyboard());
+        onView(withId(R.id.etlatitude)).perform(replaceText("90"), closeSoftKeyboard());
+        onView(withId(R.id.etlongitude)).perform(replaceText("-110"), closeSoftKeyboard());
+        onView(withId(R.id.etlatitude2)).perform(replaceText("70"), closeSoftKeyboard());
+        onView(withId(R.id.etlongitude2)).perform(replaceText("-90"), closeSoftKeyboard());
         onView(withId(R.id.go)).perform(click());
 
         //check to see if any other photos show up
