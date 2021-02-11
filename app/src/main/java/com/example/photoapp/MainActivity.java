@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Uses the Share API in android to open share widget and allow us to send via chosen 
+    // Uses the Share API in android to open share widget and allow us to send via chosen
     private void shareImage() {
         Intent share = new Intent(Intent.ACTION_SEND);
 

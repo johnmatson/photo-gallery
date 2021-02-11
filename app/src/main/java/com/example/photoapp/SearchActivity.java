@@ -17,6 +17,7 @@ public class SearchActivity extends AppCompatActivity{
     float flong = 0;
 
 
+    // Create the Search Activity Page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +38,12 @@ public class SearchActivity extends AppCompatActivity{
         } catch (Exception ex) { }
     }
 
+    // Close Search activity without passing anything back to main activity
     public void cancel(final View v) {
         finish();
     }
 
+    // Ok button, pushes the filter options back to main activities "find photos" 
     public void go(final View v) {
         Intent i = new Intent();
         EditText from = (EditText) findViewById(R.id.etStartDateTime);
@@ -73,35 +76,8 @@ public class SearchActivity extends AppCompatActivity{
         i.putExtra("LATMIN", latmin_str.equals("")? deflatmin : Float.parseFloat(latmin_str));
         i.putExtra("LONGMAX", lonmax_str.equals("")? deflonmax : Float.parseFloat(lonmax_str));
 
-        /*for(int j=0 ; j < photos.size() ; j++){
-            String name = photos.get(j);
-            String[] splitname = name.split("/");
-            String[] splitname2 = splitname[splitname.length-1].split("_");
-            flat = Float.parseFloat(splitname2[3]);
-            flong = Float.parseFloat(splitname2[4]);
-            if(flat > latmin && flat < latmax && flong > longmin && flong < longmax){
-                loclist.add(j);
-            }
-        }
-
-        i.putIntegerArrayListExtra("LOCLIST", loclist);*/
-
         setResult(RESULT_OK, i);
         finish();
     }
-
-    /*public static ArrayList<String> findPhotos(Date startTimestamp, Date endTimestamp, String keywords) {
-        File file = new File(Environment.getExternalStorageDirectory()
-                .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
-        ArrayList<String> photos = new ArrayList<String>();
-        File[] fList = file.listFiles();
-        if (fList != null) {
-            for (File f : fList) {
-                if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() && f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)))
-                    photos.add(f.getPath());
-            }
-        }
-        return photos;
-    }*/
 
 }
