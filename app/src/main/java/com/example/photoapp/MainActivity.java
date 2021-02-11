@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
     public void click_snap(View v) {
