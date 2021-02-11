@@ -39,6 +39,22 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.previd)).perform(click());
         onView(withId(R.id.previd)).perform(click());
 
+
+
+        //Open Search Activity
+        onView(withId(R.id.filter)).perform(click());
+        //Type in Search criteria
+        onView(withId(R.id.etlatitude)).perform(replaceText("40"), closeSoftKeyboard());
+        onView(withId(R.id.etlongitude)).perform(replaceText("-130"), closeSoftKeyboard());
+        onView(withId(R.id.etlatitude2)).perform(replaceText("30"), closeSoftKeyboard());
+        onView(withId(R.id.etlongitude2)).perform(replaceText("-120"), closeSoftKeyboard());
+        onView(withId(R.id.go)).perform(click());
+
+        //check to see if any other photos show up
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
     }
 }
 
