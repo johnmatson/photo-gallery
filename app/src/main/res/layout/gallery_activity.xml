@@ -43,7 +43,6 @@
         android:text="Caption" />
 
     <Button
-        android:id="@+id/clearid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="clear_filter"
@@ -68,7 +67,6 @@
             app:backgroundTint="#609ACA" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/snapid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
