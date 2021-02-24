@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         startTimestamp = null;
         endTimestamp = null;
         keywords = null;
+        latloc = "0.0";
+        longloc = "0.0";
 
         photos = findPhotos();
 
@@ -118,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
                             longloc = Location.convert(location.getLongitude(), Location.FORMAT_DEGREES);
                         }
                         else{
-                            latloc = "0-00000";
-                            longloc = "0-00000";
+                            latloc = "0.0";
+                            longloc = "0.0";
                             showText("There is no location recorded. Please open a location documenting app");
                         }
                     }
@@ -173,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
 
+    public void clear_filter(View v) {
+        filtered = false;
+        findPhotos();
+    }
+
     // Takes the input from the search activity and updates the list of photos that match teh criteria.
     private ArrayList<String> findPhotos() {
         File file = new File(Environment.getExternalStorageDirectory()
@@ -182,17 +189,25 @@ public class MainActivity extends AppCompatActivity {
         if (fList != null) {
             for (File f : fList) {
                 if(filtered) {
+                    boolean busetime = startTimestamp == null || endTimestamp == null ? false : true;
+                    boolean bkeyword = keywords.equals("") ? false : true;
+                    boolean bloc = (latmin == (float)0.0 && latmax == (float) 0.0 && longmin == (float)0.0 && longmax == (float) 0.0) ? false : true;
                     String[] splitname = f.getPath().split("/");
                     String[] splitname2 = splitname[splitname.length - 1].split("_");
 
                     float flat = Float.parseFloat(splitname2[3]);
                     float flong = Float.parseFloat(splitname2[4]);
-                    float aaa = (float) 0.0;
+                    boolean bkeepphoto = true;
 
-                    // if (((startTimestamp == null && endTimestamp == null) || (f.lastModified() >= startTimestamp.getTime() &&
-                    //        f.lastModified() <= endTimestamp.getTime())) && (keywords == null || f.getPath().contains(keywords)) &&
-                    //        (flat > latmin && flat < latmax && flong > longmin && flong < longmax))
-                    if (flat > latmin && flat < latmax && flong > longmin && flong < longmax)
+                    if(busetime == true && !(f.lastModified() >= startTimestamp.getTime() &&
+                            f.lastModified() <= endTimestamp.getTime()))
+                        bkeepphoto = false;
+                    if(bkeyword == true && !(f.getPath().contains(keywords)))
+                        bkeepphoto = false;
+                    if(bloc == true && !(flat > latmin && flat < latmax && flong > longmin && flong < longmax))
+                        bkeepphoto = false;
+
+                    if(bkeepphoto)
                         photos.add(f.getPath());
                 }
                 else{
@@ -241,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                DateFormat format = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
+                DateFormat format = new SimpleDateFormat("yyyyMMdd HHmmss");
                 try {
                     String from = (String) data.getStringExtra("STARTTIMESTAMP");
                     String to = (String) data.getStringExtra("ENDTIMESTAMP");
@@ -307,6 +322,4 @@ public class MainActivity extends AppCompatActivity {
         share.putExtra(Intent.EXTRA_STREAM, fileUri);
         startActivity(Intent.createChooser(share, "Share to"));
     }
-
-
 }
