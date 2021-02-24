@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         if (debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
+    // Create the Main Activity Page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Take photo Button
+    // Opens android camera through API call
     public void click_snap(View v) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -143,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Buttons to change through the photos.  If there is no photo after hitting "next" or "prev" do nothing (Keeps app from crashing)
     public void click_prev(View v) {
         if(photos.size()>0) {
             updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
@@ -163,11 +167,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Search button. Opens the search activity
     public void filter(View v) {
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
 
+    // Takes the input from the search activity and updates the list of photos that match teh criteria.
     private ArrayList<String> findPhotos() {
         File file = new File(Environment.getExternalStorageDirectory()
                 .getAbsolutePath(), "/Android/data/com.example.photoapp/files/Pictures");
@@ -198,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Shows photos that are currently in the "list" of photo.
+    // List is updated via function above. If no search, list is all photos save by the app.
     private void displayPhoto(String path) {
         ImageView iv = (ImageView) findViewById(R.id.thumbnailid);
         TextView tv = (TextView) findViewById(R.id.datetimeid);
@@ -214,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Creates the image file, and names it. Naming convention is designed to store timestamp and the Lat/Long Location data.
     private File createImageFile() throws IOException {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -225,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
+    // Some needs to commment this function, dont know what this does at all....
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -272,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // updates the photo caption I think?
     private void updatePhoto(String path, String caption) {
         String[] attr = path.split("_");
         if (attr.length >= 5) {
@@ -282,6 +293,8 @@ public class MainActivity extends AppCompatActivity {
         photos = findPhotos();
     }
 
+
+    // Uses the Share API in android to open share widget and allow us to send via chosen
     private void shareImage() {
         Intent share = new Intent(Intent.ACTION_SEND);
 
