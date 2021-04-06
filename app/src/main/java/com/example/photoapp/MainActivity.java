@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void delete() {
+    public void delete(View v) {
         File image = new File(mCurrentPhotoPath);
         image.delete();
     }
