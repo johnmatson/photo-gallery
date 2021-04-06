@@ -8,6 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.Context;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -41,6 +47,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
 public class MainActivity extends AppCompatActivity {
     boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private float longmin;
     private float longmax;
     private boolean filtered = false;
+    private float x1, x2;
+    static final int MIN_DISTANCE = 150;
 
     public ArrayList<Integer> loclist = new ArrayList<Integer>();
 
@@ -68,7 +77,44 @@ public class MainActivity extends AppCompatActivity {
     public void showText(String text) {
         if (debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                if (deltaX > MIN_DISTANCE)
 
+                {
+                    Toast.makeText(this, "left2right swipe", Toast.LENGTH_SHORT).show ();
+                    if(photos.size()>0) {
+                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+                        if (index > 0) {
+                            index--;
+                        }
+                        displayPhoto(photos.get(index));
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this, "right2left swipe", Toast.LENGTH_SHORT).show ();
+                    if(photos.size()>0) {
+                        updatePhoto(photos.get(index), ((EditText) findViewById(R.id.captionid)).getText().toString());
+                        if (index < (photos.size() - 1)) {
+                            index++;
+                        }
+                        displayPhoto(photos.get(index));
+                    }
+                    // consider as something else - a screen tap for example
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
     // Create the Main Activity Page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
