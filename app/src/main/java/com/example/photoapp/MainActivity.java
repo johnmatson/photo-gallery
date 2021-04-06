@@ -167,6 +167,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void delete() {
+        File image = new File(mCurrentPhotoPath);
+        image.delete();
+    }
     // Search button. Opens the search activity
     public void filter(View v) {
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
