@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:gravity="center|top"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
 
     <ImageView
@@ -16,8 +15,8 @@
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
         android:layout_weight=".7"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -45,10 +44,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center|bottom"
-        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
         android:layout_weight=".3"
-        android:layout_marginBottom="10dp">
+        android:gravity="center|bottom"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/previd"
@@ -56,8 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
             android:layout_weight="1"
-            android:text="◀ prev"
             android:onClick="click_prev"
+            android:text="◀ prev"
             app:backgroundTint="#609ACA" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -76,35 +75,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="next ▶"
             android:onClick="click_next"
+            android:text="next ▶"
             app:backgroundTint="#609ACA" />
 
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/filter"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:onClick="filter"
-        android:text="Search"
-        app:backgroundTint="#609ACA" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/shareid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share" />
+        <Button
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:onClick="filter"
+            android:text="Search"
+            app:backgroundTint="#609ACA" />
 
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
-        android:onClick="delete"
-        app:backgroundTint="#609ACA"/>
+        <Button
+            android:id="@+id/shareid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share" />
+
+        <Button
+            android:id="@+id/faceid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find Face" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="delete"
+            android:text="Delete"
+            app:backgroundTint="#609ACA" />
+
+    </LinearLayout>
 
 </LinearLayout>

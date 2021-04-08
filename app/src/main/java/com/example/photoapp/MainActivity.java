@@ -1,51 +1,56 @@
 package com.example.photoapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.Context;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-
-import android.net.Uri;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -70,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     private float x1, x2;
     static final int MIN_DISTANCE = 150;
 
+    private static final int READ_REQUEST_CODE = 42;
+    private static final String TAG = "MainActivity";
+
     public ArrayList<Integer> loclist = new ArrayList<Integer>();
 
     //String apiKey = BuildConfig.API_KEY;
@@ -77,7 +85,11 @@ public class MainActivity extends AppCompatActivity {
     public void showText(String text) {
         if (debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+<<<<<<< Updated upstream
     //with code from : https://stackoverflow.com/questions/6645537/how-to-detect-the-swipe-left-or-right-in-android
+=======
+
+>>>>>>> Stashed changes
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getAction())
@@ -121,12 +133,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_activity);
+
+        Button facebtn = findViewById(R.id.faceid);
+        facebtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, READ_REQUEST_CODE);
+            }
+        });
+
         startTimestamp = null;
         endTimestamp = null;
         keywords = null;
 
         photos = findPhotos();
-
 
         if (photos.size() == 0) {
             displayPhoto(null);
@@ -174,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     // Take photo Button
     // Opens android camera through API call
     public void click_snap(View v) {
@@ -219,11 +243,16 @@ public class MainActivity extends AppCompatActivity {
         image.delete();
         findPhotos();
     }
+
+
+
     // Search button. Opens the search activity
     public void filter(View v) {
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
+
+
 
     // Takes the input from the search activity and updates the list of photos that match teh criteria.
     private ArrayList<String> findPhotos() {
@@ -254,7 +283,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return photos;
     }
-
 
     // Shows photos that are currently in the "list" of photo.
     // List is updated via function above. If no search, list is all photos save by the app.
@@ -332,6 +360,71 @@ public class MainActivity extends AppCompatActivity {
             File image = new File(mCurrentPhotoPath);
             image.delete();
         }
+
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+                Log.i(TAG, "Uri: " + uri.toString());
+                try {
+                    getBitmapFromUri(uri);
+                } catch (IOException e) {
+//                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        showImage(fileDescriptor);
+    }
+
+    public void showImage(FileDescriptor fileDescriptor) {
+        //Load the Image
+        ImageView myImageView = findViewById(R.id.thumbnailid);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable=true;
+
+        //create paint object to draw square
+        Bitmap myBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        Paint myRectPaint = new Paint();
+        myRectPaint.setStrokeWidth(5);
+        myRectPaint.setColor(Color.RED);
+        myRectPaint.setStyle(Paint.Style.STROKE);
+
+        //create canvas to draw on
+        Bitmap tempBitmap = Bitmap.createBitmap(myBitmap.getWidth(), myBitmap.getHeight(), Bitmap.Config.RGB_565);
+        Canvas tempCanvas = new Canvas(tempBitmap);
+        tempCanvas.drawBitmap(myBitmap, 0, 0, null);
+
+        //create face detector
+        FaceDetector faceDetector = new
+                FaceDetector.Builder(this)
+                .setTrackingEnabled(false)
+                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
+                .setMode(FaceDetector.FAST_MODE)
+                .build();
+        if(!faceDetector.isOperational()){
+            new AlertDialog.Builder(getApplicationContext()).setMessage("Could not set up the face detector!").show();
+            return;
+        }
+
+        //detect faces
+        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
+        SparseArray<Face> faces = faceDetector.detect(frame);
+
+        for(int i=0; i<faces.size(); i++) {
+            Face thisFace = faces.valueAt(i);
+            float x1 = thisFace.getPosition().x;
+            float y1 = thisFace.getPosition().y;
+            float x2 = x1 + thisFace.getWidth();
+            float y2 = y1 + thisFace.getHeight();
+            tempCanvas.drawRoundRect(new RectF(x1, y1, x2, y2), 2, 2, myRectPaint);
+        }
+        myImageView.setImageDrawable(new BitmapDrawable(getResources(),tempBitmap));
     }
 
     // updates the photo caption I think?
