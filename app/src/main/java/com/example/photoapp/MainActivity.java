@@ -85,11 +85,7 @@ public class MainActivity extends AppCompatActivity {
     public void showText(String text) {
         if (debug) Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
-<<<<<<< Updated upstream
-    //with code from : https://stackoverflow.com/questions/6645537/how-to-detect-the-swipe-left-or-right-in-android
-=======
 
->>>>>>> Stashed changes
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch(event.getAction())

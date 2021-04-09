@@ -14,9 +14,18 @@ public class ExampleInstrumentedTest {
     @Test
     public void ensureTextChangesWork() {
         //Show the photos in app
-        onView(withId(R.id.delete)).perform(click());
+
         onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.nextid)).perform(click());
+        onView(withId(R.id.delete)).perform(click());
         onView(withId(R.id.previd)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
+        onView(withId(R.id.previd)).perform(click());
+
+        //other functionality requires Unit tests with functionaliy outside of app... did that manually.
     }
 }
 
