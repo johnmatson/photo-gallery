@@ -2,30 +2,14 @@
 
 package com.example.photoapp;
 
-        import android.app.AlertDialog;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Canvas;
-        import android.graphics.Color;
-        import android.graphics.Paint;
-        import android.graphics.RectF;
-        import android.graphics.drawable.BitmapDrawable;
-        import android.util.SparseArray;
-        import android.widget.ImageView;
-
-        import com.google.android.gms.vision.Frame;
-        import com.google.android.gms.vision.face.Face;
-        import com.google.android.gms.vision.face.FaceDetector;
 
         import org.junit.Test;
 
-        import java.io.FileDescriptor;
         import java.text.*;
         import java.util.*;
 
         import static org.junit.Assert.assertEquals;
         import static org.junit.Assert.assertNotNull;
-        import static org.junit.Assert.assertTrue;
 
 public class UnitTest {
     @Test
@@ -74,34 +58,4 @@ public class UnitTest {
         }
         return photos;
     }
-
-    public void FaceTest() throws ParseException {
-
-        boolean test = faceDetect();
-
-        assertTrue(test);
-
-    }
-
-    public boolean faceDetect() {
-
-        FileDescriptor
-        Bitmap myBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-
-        //create face detector
-        FaceDetector faceDetector = new
-                FaceDetector.Builder(this)
-                .setTrackingEnabled(false)
-                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
-                .setMode(FaceDetector.FAST_MODE)
-                .build();
-
-        //detect faces
-        Frame frame = new Frame.Builder().setBitmap(myBitmap).build();
-        SparseArray<Face> faces = faceDetector.detect(frame);
-        }
-
-        return answer;
-    }
-
 }
