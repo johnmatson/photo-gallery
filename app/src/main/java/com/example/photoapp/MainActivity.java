@@ -49,10 +49,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-
-
-
 public class MainActivity extends AppCompatActivity {
     boolean debug = true;
     public static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -192,8 +188,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     // Take photo Button
     // Opens android camera through API call
     public void click_snap(View v) {
@@ -240,15 +234,11 @@ public class MainActivity extends AppCompatActivity {
         findPhotos();
     }
 
-
-
     // Search button. Opens the search activity
     public void filter(View v) {
         Intent i = new Intent(MainActivity.this, SearchActivity.class);
         startActivityForResult(i, SEARCH_ACTIVITY_REQUEST_CODE);
     }
-
-
 
     // Takes the input from the search activity and updates the list of photos that match teh criteria.
     private ArrayList<String> findPhotos() {
@@ -433,7 +423,6 @@ public class MainActivity extends AppCompatActivity {
         }
         photos = findPhotos();
     }
-
 
     // Uses the Share API in android to open share widget and allow us to send via chosen
     private void shareImage() {
